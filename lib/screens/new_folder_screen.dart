@@ -1,8 +1,9 @@
 import 'package:flash_cards/data/database.dart';
 import 'package:flutter/material.dart';
+import 'package:flash_cards/screens/create_screen.dart';
 // import 'package:flash_cards/providers/folder_provider.dart';
 // import 'package:hive/hive.dart';
-// import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 
 class NewFolderScreen extends StatefulWidget {
@@ -31,6 +32,7 @@ class _NewFolderScreenState extends State<NewFolderScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
+              autofocus: true,
               obscureText: false,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -38,13 +40,12 @@ class _NewFolderScreenState extends State<NewFolderScreen> {
               ),
               onSubmitted: (String value) {
                   if (dataBase.loadData(value) == null) {
-                  // if (1 == 1){
-                    dataBase.createInitialData(value);
-
+                    Provider.of<CardsDataBase>(context, listen: false).createInitialData(value);
                   } else {
                     throw('List Already Exists');
                   }
                   Navigator.pop(widget.parentContext);
+                  popCreateScreen(context);
               },
             ),
             SizedBox(height: 25),

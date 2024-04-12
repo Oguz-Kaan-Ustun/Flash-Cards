@@ -13,7 +13,7 @@ class AddFlashCardScreen extends StatefulWidget {
 }
 
 class _AddFlashCardScreenState extends State<AddFlashCardScreen> {
-  FlashModel flashModel = FlashModel(back: 'Enter answer', front: 'Enter question');
+  FlashModel flashModel = FlashModel(back: 'Enter answer', front: 'Enter question', isKnown: false);
 
   CardsDataBase dataBase = CardsDataBase();
 
@@ -31,11 +31,12 @@ class _AddFlashCardScreenState extends State<AddFlashCardScreen> {
                 border: OutlineInputBorder(),
                 labelText: 'Enter Question',
               ),
-              onSubmitted: (String value) {
+              onChanged: (String value) {
                 setState(() {
                   flashModel.front = value;
                 });
               },
+              textInputAction: TextInputAction.next
             ),
             SizedBox(height: 15),
             TextField(
@@ -44,11 +45,12 @@ class _AddFlashCardScreenState extends State<AddFlashCardScreen> {
                 border: OutlineInputBorder(),
                 labelText: 'Enter Answer',
               ),
-              onSubmitted: (String value) {
+              onChanged: (String value) {
                 setState(() {
                   flashModel.back = value;
                 });
               },
+              textInputAction: TextInputAction.next
             ),
             SizedBox(height: 15),
             ElevatedButton(
@@ -59,6 +61,7 @@ class _AddFlashCardScreenState extends State<AddFlashCardScreen> {
                 onPressed: (){
                   if(flashModel.front != 'Enter question' && flashModel.back != 'Enter answer'){
                     dataBase.addToDataBase(widget.listName, flashModel);
+                    Navigator.pop(context);
                   } else {
                     throw('Please fill in the required fields');
                   }
@@ -71,7 +74,7 @@ class _AddFlashCardScreenState extends State<AddFlashCardScreen> {
                       Icon(Icons.folder_outlined),
                       SizedBox(width: 15),
                       Text(
-                        'New Folder',
+                        'Add Flash Card',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

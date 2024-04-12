@@ -61,6 +61,10 @@ class CreateScreen extends StatelessWidget {
   }
 }
 
+void popCreateScreen(context) {
+  Navigator.pop(context);
+}
+
 // SizedBox(height: 15),
 // ElevatedButton(
 //   style: ButtonStyle(

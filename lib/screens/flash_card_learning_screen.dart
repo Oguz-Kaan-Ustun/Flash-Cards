@@ -1,4 +1,5 @@
 //import 'package:flash_cards/models/flash_card_model.dart';
+import 'package:flash_cards/data/database.dart';
 import 'package:flash_cards/widgets/flash_card_widget.dart';
 import 'package:flutter/material.dart';
 //import 'package:flash_cards/widgets/flash_card_widget.dart';
@@ -20,25 +21,34 @@ class _FlashCardLearningScreenState extends State<FlashCardLearningScreen> {
   Widget buildCards() {
     final provider = Provider.of<CardProvider>(context);
     final cards = provider.cards;
+    final listName = provider.listName;
 
-    return cards.isEmpty
-        ? Center(
-            child: ElevatedButton(
-              child: Text('Restart'),
-              onPressed: () {
-                final provider =
-                    Provider.of<CardProvider>(context, listen: false);
-                provider.resetUsers();
-              },
+    CardsDataBase dataBase = CardsDataBase();
+
+    return !dataBase.loadData(listName).isEmpty
+        ? cards.isEmpty
+            ? Center(
+                child: ElevatedButton(
+                  child: Text('Restart'),
+                  onPressed: () {
+                    final provider =
+                        Provider.of<CardProvider>(context, listen: false);
+                    provider.resetUsers();
+                  },
+                ),
+              )
+            : Stack(
+                children: cards
+                    .map((e) => FlashCardWidget(
+                          flashModel: e,
+                          isfront: cards.last == e,
+                        ))
+                    .toList())
+        : Center(
+            child: Container(
+              child: Text('Add flash cards first'),
             ),
-          )
-        : Stack(
-            children: cards
-                .map((e) => FlashCardWidget(
-                      flashModel: e,
-                      isfront: cards.last == e,
-                    ))
-                .toList());
+          );
   }
 
   @override
@@ -47,7 +57,7 @@ class _FlashCardLearningScreenState extends State<FlashCardLearningScreen> {
       appBar: AppBar(
         backgroundColor: Colors.lightGreen,
         title: Text(
-          'Flash Card Screen',
+          'Learning Screen',
         ),
       ),
       body: SafeArea(

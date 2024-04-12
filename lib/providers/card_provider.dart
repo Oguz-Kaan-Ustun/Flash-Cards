@@ -1,9 +1,9 @@
 // import 'package:flash_cards/widgets/flash_card_widget.dart';
 import 'package:flash_cards/data/database.dart';
 import 'package:flutter/material.dart';
-import 'package:flash_cards/models/flash_card_model.dart';
 
 enum CardStatus {right, wrong}
+int nextElementInt = 0;
 
 
 class CardProvider extends ChangeNotifier{
@@ -11,24 +11,20 @@ class CardProvider extends ChangeNotifier{
   CardsDataBase dataBase = CardsDataBase();
 
   String _listName = '';
-
-  List<FlashModel> _cards = [];
+  List _cards = [];
   bool _isDragging = false;
   double _angle = 0;
   Offset _position = Offset.zero;
   Size _screenSize = Size.zero;
 
-  List<FlashModel> get cards => _cards;
+  List get cards => _cards;
   Offset get position => _position;
   bool get isDragging => _isDragging;
   double get angle => _angle;
+  String get listName => _listName;
 
   CardProvider() {
     resetUsers();
-  }
-
-  void giveListName(String listName){
-    _listName = listName;
   }
 
   void setScreenSize(Size screenSize) => _screenSize = screenSize;
@@ -83,6 +79,12 @@ class CardProvider extends ChangeNotifier{
   void right(){
     _angle = 20;
     _position += Offset(_screenSize.width *2 , 0);
+
+    print(dataBase.loadData(_listName).toList()[nextElementInt].front);
+    print(nextElementInt);
+    dataBase.updateFlashCard(nextElementInt, true, _listName);
+    nextElementInt++;
+
     _nextCard();
 
     notifyListeners();
@@ -91,6 +93,10 @@ class CardProvider extends ChangeNotifier{
   void wrong(){
     _angle = -20;
     _position -= Offset(_screenSize.width * 2, 0);
+
+    dataBase.updateFlashCard(nextElementInt, false, _listName);
+    nextElementInt++;
+
     _nextCard();
 
     notifyListeners();
@@ -111,14 +117,17 @@ class CardProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  void giveListName(String listName){
+    _listName = listName;
+    resetUsers();
+  }
+
   void resetUsers() {
     if(dataBase.loadData(_listName) != null){
+      print(dataBase.loadData(_listName));
       _cards = dataBase.loadData(_listName).reversed.toList();
-    } else {
-      _cards = [
-        FlashModel(back: "Test 1", front: "Test 2"),
-        FlashModel(back: "Test 3", front: "Test 4")
-      ];
+      nextElementInt = 0;
+      print('resetUsers was called');
     }
 
     notifyListeners();
