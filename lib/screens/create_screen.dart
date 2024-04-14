@@ -60,36 +60,3 @@ class CreateScreen extends StatelessWidget {
     );
   }
 }
-
-void popCreateScreen(context) {
-  Navigator.pop(context);
-}
-
-// SizedBox(height: 15),
-// ElevatedButton(
-//   style: ButtonStyle(
-//     backgroundColor: MaterialStateProperty.all(Colors.blueGrey[50]),
-//     iconColor: MaterialStateProperty.all(Colors.black),
-//   ),
-//     onPressed: (){
-//       Navigator.pushNamed(context, FlashCardLearningScreen.id);
-//     },
-//     child: Container(
-//       height: 60,
-//       child: Row(
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           Icon(Icons.filter_none),
-//           SizedBox(width: 15),
-//           Text(
-//               'Add Flash Card',
-//             style: TextStyle(
-//               fontSize: 20,
-//               fontWeight: FontWeight.bold,
-//               color: Colors.black,
-//             ),
-//           ),
-//         ],
-//       ),
-//     ),
-// ),

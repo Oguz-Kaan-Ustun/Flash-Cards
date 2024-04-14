@@ -80,9 +80,9 @@ class CardProvider extends ChangeNotifier{
     _angle = 20;
     _position += Offset(_screenSize.width *2 , 0);
 
-    print(dataBase.loadData(_listName).toList()[nextElementInt].front);
-    print(nextElementInt);
-    dataBase.updateFlashCard(nextElementInt, true, _listName);
+    // print(dataBase.loadData(_listName).toList()[nextElementInt].front);
+    // print(nextElementInt);
+    dataBase.updateCardIsKnown(nextElementInt, true, _listName);
     nextElementInt++;
 
     _nextCard();
@@ -94,7 +94,7 @@ class CardProvider extends ChangeNotifier{
     _angle = -20;
     _position -= Offset(_screenSize.width * 2, 0);
 
-    dataBase.updateFlashCard(nextElementInt, false, _listName);
+    dataBase.updateCardIsKnown(nextElementInt, false, _listName);
     nextElementInt++;
 
     _nextCard();
@@ -127,7 +127,6 @@ class CardProvider extends ChangeNotifier{
       print(dataBase.loadData(_listName));
       _cards = dataBase.loadData(_listName).reversed.toList();
       nextElementInt = 0;
-      print('resetUsers was called');
     }
 
     notifyListeners();

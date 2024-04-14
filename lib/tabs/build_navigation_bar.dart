@@ -64,7 +64,6 @@ class _BuildNavBarState extends State<BuildNavBar> {
         selectedIndex: currentIndex,
         onDestinationSelected: (index) => setState(() {
           _onItemTapped(index);
-          print(currentIndex);
         }),
         destinations: [
           NavigationDestination(

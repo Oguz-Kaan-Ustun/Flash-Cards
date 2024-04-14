@@ -4,16 +4,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flash_cards/utilities/constants.dart';
 
 class CardsDataBase extends ChangeNotifier {
-  // List<FlashModel> cardsList = [];
-
   // reference our box
   Box _myBox = Hive.box(AppConstants.flashCardBoxName);
   Box get myBox => _myBox;
-
-  // //Update the value '_myBox' for provider
-  // void updateBox() {
-  //   _myBox = Hive.box(AppConstants.flashCardBoxName);
-  // }
 
   //run this method if creating new list
   void createInitialData(String listName) {
@@ -29,23 +22,43 @@ class CardsDataBase extends ChangeNotifier {
   // update the database
   void updateDataBase(String listName, List listContent) {
     _myBox.put(listName, listContent);
+
+    notifyListeners();
   }
 
   // add flash card to database
-  void addToDataBase(String listName, FlashModel flashModel){
+  void addFlashCard(String listName, FlashModel flashModel){
     List newList = _myBox.get(listName);
     newList.add(flashModel);
     _myBox.put(listName, newList);
+
+    notifyListeners();
   }
 
-  void updateFlashCard(int listIndex, bool? isKnown, String listName) {
-     print(listIndex);
+  void deleteFlashCard(String listName, int indexOfCard){
+    List newList = _myBox.get(listName);
+    newList.removeAt(indexOfCard);
+    _myBox.put(listName, newList);
+
+    notifyListeners();
+  }
+
+  void updateCardIsKnown(int listIndex, bool? isKnown, String listName) {
     List listFromBox = _myBox.get(listName);
     FlashModel flashModelFromList = listFromBox[listIndex];
-     print(_myBox.get(listName)[listIndex].isKnown);
     flashModelFromList.isKnown = isKnown;
     listFromBox[listIndex] = flashModelFromList;
-     print(_myBox.get(listName)[listIndex].isKnown);
     updateDataBase(listName, listFromBox);
+    // print(listIndex);
+    // print(_myBox.get(listName)[listIndex].isKnown);
+    // print(_myBox.get(listName)[listIndex].isKnown);
+
+    notifyListeners();
+  }
+
+  void updateCardContents(int listIndex, String listName, FlashModel flashModel){
+    List list = _myBox.get(listName);
+    list[listIndex] = flashModel;
+    updateDataBase(listName, list);
   }
 }

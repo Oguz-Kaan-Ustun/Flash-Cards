@@ -22,29 +22,9 @@ class SmallPagePainter extends CustomPainter {
       ..color = Colors.blueGrey
       ..strokeWidth = 1.0;
     for (var i = 1; i < numOfLines; i++){
-      print(size.height);
-      print(linePlacementRatio);
       canvas.drawLine(Offset(0, size.height * linePlacementRatio*i),
           Offset(size.width, size.height * linePlacementRatio*i), paintDarkgrey);
     }
-    // canvas.drawLine(Offset(0, size.height * .2),
-    //     Offset(size.width, size.height * .2), paintDarkgrey);
-    // canvas.drawLine(Offset(0, size.height * .4),
-    //     Offset(size.width, size.height * .4), paintDarkgrey);
-    // canvas.drawLine(Offset(0, size.height * .6),
-    //     Offset(size.width, size.height * .6), paintDarkgrey);
-    // canvas.drawLine(Offset(0, size.height * .8),
-    //     Offset(size.width, size.height * .8), paintDarkgrey);
-    // canvas.drawLine(Offset(0, size.height * .5),
-    //     Offset(size.width, size.height * .5), paintDarkgrey);
-    // canvas.drawLine(Offset(0, size.height * .6),
-    //     Offset(size.width, size.height * .6), paintDarkgrey);
-    // canvas.drawLine(Offset(0, size.height * .7),
-    //     Offset(size.width, size.height * .7), paintDarkgrey);
-    // canvas.drawLine(Offset(0, size.height * .8),
-    //     Offset(size.width, size.height * .8), paintDarkgrey);
-    // canvas.drawLine(Offset(0, size.height * .9),
-    //     Offset(size.width, size.height * .9), paintDarkgrey);
 
 
 

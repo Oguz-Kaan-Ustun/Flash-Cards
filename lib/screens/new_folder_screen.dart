@@ -27,7 +27,7 @@ class _NewFolderScreenState extends State<NewFolderScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -45,7 +45,7 @@ class _NewFolderScreenState extends State<NewFolderScreen> {
                     throw('List Already Exists');
                   }
                   Navigator.pop(widget.parentContext);
-                  popCreateScreen(context);
+                  Navigator.pop(context);
               },
             ),
             SizedBox(height: 25),
@@ -55,10 +55,3 @@ class _NewFolderScreenState extends State<NewFolderScreen> {
     );
   }
 }
-
-//final provider = Provider.of<FolderProvider>(context, listen: false);
-// provider.folderNames.add(value);
-// print(provider.folderNames);
-// // listOfFolderNames.add(value);
-// provider.getList(provider.folderNames);
-// print(provider.folderNames);

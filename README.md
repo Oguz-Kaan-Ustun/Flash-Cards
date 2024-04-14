@@ -9,10 +9,14 @@ A new Flutter project.
 [X] FlashModel data tipinde neden List oluşturamıyorum? (Hive List<Dynamic> türündedir)
 [X] Biliyorum_Biliyorum diye ayır cartları
 [X] kart ekleme problemi
-[ ] Kart sil
-[ ] Kart editle
+[X] Kart sil
+[X] Kart editle
+[ ] Kart silerken küçük bir bug var düzelt
+[ ] Folder sil
+[ ] Folder editle
+[ ] Emin misiniz mesajları
+[ ] Boş folder eklenmesini önle
 [ ] quiz ekle
-[ ] Kart sıralamasını kar
 [ ] İstatistik
 [ ] Camera ile belge tarama OCR
 [ ] yapay zeka için ücret

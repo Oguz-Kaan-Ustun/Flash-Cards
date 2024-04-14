@@ -1,13 +1,11 @@
 import 'package:flash_cards/screens/flash_card_learning_screen.dart';
 import 'package:flash_cards/screens/test_main_screen.dart';
+import 'package:flash_cards/widgets/dynamic_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flash_cards/data/database.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../providers/card_provider.dart';
-import '../utilities/page_painter.dart';
-import '../utilities/small_page_painter.dart';
 import 'add_flash_card_screen.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -28,9 +26,14 @@ class FolderMainScreen extends StatefulWidget {
 }
 
 class _FolderMainScreenState extends State<FolderMainScreen> {
+  List cards = [];
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+
+    final provider = Provider.of<CardsDataBase>(context, listen: true);
+    cards = provider.myBox.get(args.folderName).toList();
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -57,7 +60,9 @@ class _FolderMainScreenState extends State<FolderMainScreen> {
                   Navigator.pushNamed(
                     context,
                     FlashCardLearningScreen.id,
-                  );
+                  ).then((_) {
+                    setState(() {});
+                  });
                 },
                 child: Container(
                   height: 60,
@@ -133,7 +138,7 @@ class _FolderMainScreenState extends State<FolderMainScreen> {
                       child: Container(
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: AddFlashCardScreen(listName: args.folderName),
+                        child: AddFlashCardScreen(listName: args.folderName, isNewCard: true),
                       ),
                     ),
                   );
@@ -170,191 +175,21 @@ class _FolderMainScreenState extends State<FolderMainScreen> {
                 alignment: Alignment.centerLeft,
               ),
               SizedBox(height: 10),
-              CustomPaint(
-                painter: SmallPagePainter(),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3.0, bottom: 3, right: 3),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.more_horiz),
-                          iconSize: 30,
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.topCenter,
-                        ),
-                        flex: 4,
+              !cards.isEmpty
+                  ? Column(
+                      children: cards
+                          .map((e) => DynamicCardWidget(
+                                flashModel: e,
+                                listName: args.folderName,
+                                indexOfCard: cards.indexOf(e),
+                              ))
+                          .toList(),
+                    )
+                  : Center(
+                      child: Container(
+                        child: Text('Add flash cards first'),
                       ),
-                      Expanded(
-                        flex: 31,
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'filler rkjjhr h uhuı rhgurhu eıgh eurı gue ur  urhguhe rugh uegrh ueu ug u  ', //cardContents(cardSide)
-                            softWrap: true,
-                            style: GoogleFonts.indieFlower(
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              CustomPaint(
-                painter: SmallPagePainter(),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3.0, bottom: 3, right: 3),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.more_horiz),
-                          iconSize: 30,
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.topCenter,
-                        ),
-                        flex: 4,
-                      ),
-                      Expanded(
-                        flex: 31,
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'filler rkjjhr h uhuı rhgurhu eıgh eurı gue ur  urhguhe rugh uegrh ueu ug u  ', //cardContents(cardSide)
-                            softWrap: true,
-                            style: GoogleFonts.indieFlower(
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              CustomPaint(
-                painter: SmallPagePainter(),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3.0, bottom: 3, right: 3),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.more_horiz),
-                          iconSize: 30,
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.topCenter,
-                        ),
-                        flex: 4,
-                      ),
-                      Expanded(
-                        flex: 31,
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'filler rkjjhr h uhuı rhgurhu eıgh eurı gue ur  urhguhe rugh uegrh ueu ug u  ', //cardContents(cardSide)
-                            softWrap: true,
-                            style: GoogleFonts.indieFlower(
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              CustomPaint(
-                painter: SmallPagePainter(),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3.0, bottom: 3, right: 3),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.more_horiz),
-                          iconSize: 30,
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.topCenter,
-                        ),
-                        flex: 4,
-                      ),
-                      Expanded(
-                        flex: 31,
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'filler rkjjhr h uhuı rhgurhu eıgh eurı gue ur  urhguhe rugh uegrh ueu ug u  ', //cardContents(cardSide)
-                            softWrap: true,
-                            style: GoogleFonts.indieFlower(
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              CustomPaint(
-                painter: SmallPagePainter(),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3.0, bottom: 3, right: 3),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.more_horiz),
-                          iconSize: 30,
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.topCenter,
-                        ),
-                        flex: 4,
-                      ),
-                      Expanded(
-                        flex: 31,
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'filler rkjjhr h uhuı rhgurhu eıgh eurı gue ur  urhguhe rugh uegrh ueu ug u  ', //cardContents(cardSide)
-                            softWrap: true,
-                            style: GoogleFonts.indieFlower(
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
+                    ),
             ],
           ),
         ),
